@@ -111,15 +111,17 @@ server.search(basedn, function (req, res, next) {
             return next(new ldap.LDAPError());
           }
           
-          var user = {
-            dn: "cn=" + username + ", " + basedn,
-            attributes: {
-              objectclass: ["top"],
-              cn: username,
-              fn: username,
-              sn: username
-            },
-          };
+          for (var i = 0; i < users.length; i++) {
+            var user = {
+              dn: "cn=" + username + ", " + basedn,
+              attributes: {
+                objectclass: ["top"],
+                cn: users[i].username,
+                fn: users[i].fullname,
+                sn: users[i].surename
+              },
+            };
+          }
           console.log(user);
           res.send(user);
         }
