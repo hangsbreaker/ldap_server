@@ -109,19 +109,12 @@ server.search(basedn, function (req, res, next) {
           console.log("Error fetching users", err);
           return next(new ldap.LDAPError());
         }
-        for (var i = 0; i < users.length; i++) {
-          var user = {
-            dn: "cn=" + users[i].username + ", " + basedn,
-            attributes: {
-              objectclass: ["top"],
-              cn: users[i].username,
-              mail: email,
-              fn: users[i].name,
-              sn: users[i].surname,
-            },
-          };
-          res.send(user);
-        }
+        
+        var user = {
+          dn: "cn=" + username + ", " + basedn,
+          attributes: users,
+        };
+        res.send(user);
         res.end();
       }
     );
