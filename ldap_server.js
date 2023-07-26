@@ -115,6 +115,7 @@ server.search(basedn, function (req, res, next) {
             dn: "cn=" + username + ", " + basedn,
             attributes: users,
           };
+          console.log(user);
           res.send(user);
         }
         res.end();
