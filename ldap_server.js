@@ -113,7 +113,12 @@ server.search(basedn, function (req, res, next) {
           
           var user = {
             dn: "cn=" + username + ", " + basedn,
-            attributes: users,
+            attributes: {
+              objectclass: ["top"],
+              cn: username,
+              fn: username,
+              sn: username
+            },
           };
           console.log(user);
           res.send(user);
