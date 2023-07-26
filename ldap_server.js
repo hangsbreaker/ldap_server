@@ -104,17 +104,19 @@ server.search(basedn, function (req, res, next) {
     db.query(
       "select c.* from " + table_name + " c" + query,
       function (err, users) {
-        users = users.rows;
-        if (err) {
-          console.log("Error fetching users", err);
-          return next(new ldap.LDAPError());
+        if (users != undefined) {
+          users = users.rows;
+          if (err) {
+            console.log("Error fetching users", err);
+            return next(new ldap.LDAPError());
+          }
+          
+          var user = {
+            dn: "cn=" + username + ", " + basedn,
+            attributes: users,
+          };
+          res.send(user);
         }
-        
-        var user = {
-          dn: "cn=" + username + ", " + basedn,
-          attributes: users,
-        };
-        res.send(user);
         res.end();
       }
     );
