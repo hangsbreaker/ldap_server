@@ -106,6 +106,7 @@ server.search(basedn, function (req, res, next) {
       function (err, users) {
         if (users != undefined) {
           users = users.rows;
+          // console.log(users);
           if (err) {
             console.log("Error fetching users", err);
             return next(new ldap.LDAPError());
@@ -121,9 +122,8 @@ server.search(basedn, function (req, res, next) {
                 sn: users[i].surename
               },
             };
+            res.send(user);
           }
-          console.log(user);
-          res.send(user);
         }
         res.end();
       }
