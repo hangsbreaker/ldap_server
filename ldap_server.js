@@ -31,6 +31,10 @@ var sha1 = function (input) {
   return crypto.createHash("sha1").update(input).digest("hex");
 };
 
+var sha256 = function (input) {
+  return crypto.createHash("sha256").update(input).digest("hex");
+};
+
 server.bind(basedn, function (req, res, next) {
   var username = req.dn.toString(),
     password = req.credentials;
@@ -45,7 +49,7 @@ server.bind(basedn, function (req, res, next) {
   } else {
     // query the database and validate the user
     // console.log("Get db");
-    password = sha1(password);
+    // password = sha1(password);
     db.query(
       "select c.* from " +
         table_name +
